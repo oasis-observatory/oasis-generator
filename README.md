@@ -47,17 +47,17 @@ Requirements:
 🚀 Usage
 
 Generate a single scenario:
-
+```
 python scenario_generator/generate_scenario.py
-
+```
 Generate a batch:
-
+```
 python scenario_generator/generate_batch.py
-
+```
 Output database:
-
+```
 data/asi_scenarios.db
-
+```
 ```
 
 📁 Project Structure
