@@ -1,10 +1,10 @@
 # Open Artificial Superintelligence Scenario Generator v0.1 / OASIS Generator v0.1
-Experimental generator producing single-ASI and multi-ASI foresight scenarios using open hermeneutic models.
+Experimental generator producing single-ASI and multi-ASI foresight scenarios using local LLM models.
 
 The **OASIS Generator** is an open-source module for creating narrative simulations of Artificial Superintelligence (ASI) emergence and interaction.
-It generates structured scenarios, validates them via schema, and stores them in a local SQLite database for later mapping or analysis. 
-It is an experimental tool for producing foresight-style reports on potential futures of Artificial Superintelligence.
-It can generate both **single-agent (ASI)** and **multi-agent (poly-ASI)** scenarios, each accompanied by interpretive narratives and thematic indicators.
+It generates structured scenarios based on the schema, and stores them in a local SQLite database for later mapping or analysis. 
+It can generate both **single-agent (single-ASI)** and **multi-agent (muli-ASI)** scenarios, each accompanied by interpretive narratives and thematic indicators.
+It is an experimental tool for producing foresight-style reports on potential futures of Artificial Superintelligence, with potential application in research, educational and creative projects.
 
 This module represents the first step toward the larger OASIS Observatory ecosystem.
 
@@ -61,12 +61,14 @@ scenario_generator/
 ├── config/
 │   └── asi_scenario_schema.json
 ├── utils/
-│   └── abbreviator.py
-├── single_asi_scenario.py            # This script generates a scenario based on a JSON schema, samples parameters, and saves the generated scenario to a database.
-├── single_asi_batch.py
-├── single_asi_database.py
-├── multi_asi_scenario.py
-├── multi_asi_database.py
+│   └── abbreviator.py                 # Utility to generate shortened ASI scenario titles
+├── single_asi_scenario.py             # Main script to generate a single scenario
+├── single_asi_batch.py                # Batch scenario generation utility
+├── single_asi_ollama_client.py        # Connects to local Ollama LLM for single-agent narratives
+├── single_asi_database.py             
+├── multi_asi_scenario.py              # Generator logic for multi-agent (multi-ASI) scenario narratives
+├── multi_asi_ollama_client.py         # Connects to local Ollama LLM for multi-ASI narratives
+├── multi_asi_database.py                
 └── ...
 ```
 ---
