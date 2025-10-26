@@ -34,6 +34,8 @@ git clone https://github.com/oasis-observatory/oasis-scenario-generator.git
 cd oasis-scenario-generator
 pip install -r requirements.txt
 
+```
+
 Requirements:
 
     Python 3.8+
@@ -56,9 +58,11 @@ Output database:
 
 data/asi_scenarios.db
 
+```
+
 📁 Project Structure
 
-scenario_generator/
+generator/
 ├── config/
 │   └── asi_scenario_schema.json
 ├── utils/
@@ -68,9 +72,11 @@ scenario_generator/
 ├── multi_asi_scenario.py
 ├── database.py
 └── ...
+```
 
+---
 
-# 🧭 Roadmap
+## 🧭 Roadmap
 
 - Add multiple LLM agent evaluators
 - Strengthen schema validation
