@@ -69,14 +69,15 @@ scenario_generator/
 ├── database.py
 └── ...
 
-🧭 Roadmap
+
+# 🧭 Roadmap
 
 - Add multiple LLM agent evaluators
 - Strengthen schema validation
 - Connect scenarios with precursor signals
 - Add narrative quality metrics (Coherence, Novelty, Diversity)
 
-🪪 License
+# 🪪 License
 
 Licensed under the MIT License.
 © 2025 OASIS Observatory. Open for research and educational use.
