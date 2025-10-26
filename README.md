@@ -2,7 +2,7 @@
 Experimental generator producing single-ASI and multi-ASI foresight scenarios using local LLM models.
 
 The **OASIS Generator** is an open-source module for creating narrative simulations of Artificial Superintelligence (ASI) emergence and interaction.
-It generates structured scenarios based on the schema, and stores them in a local SQLite database for later mapping or analysis. 
+It generates structured scenarios defined by the schema, and stores them in a local SQLite database for later mapping or analysis. 
 It can generate both **single-agent (single-ASI)** and **multi-agent (muli-ASI)** scenarios, each accompanied by interpretive narratives and thematic indicators.
 It is an experimental tool for producing foresight-style reports on potential futures of Artificial Superintelligence, with potential application in research, educational and creative projects.
 
@@ -59,16 +59,16 @@ data/asi_scenarios.db
 
 scenario_generator/
 ├── config/
-│   └── asi_scenario_schema.json
+│   └── asi_scenario_schema.json       # JSON schema definition for validating scenario structure
 ├── utils/
 │   └── abbreviator.py                 # Utility to generate shortened ASI scenario titles
 ├── single_asi_scenario.py             # Main script to generate a single scenario
 ├── single_asi_batch.py                # Batch scenario generation utility
 ├── single_asi_ollama_client.py        # Connects to local Ollama LLM for single-agent narratives
-├── single_asi_database.py             
+├── single_asi_database.py             # Handles SQLite operations for sinle-ASI scenarios storage
 ├── multi_asi_scenario.py              # Generator logic for multi-agent (multi-ASI) scenario narratives
 ├── multi_asi_ollama_client.py         # Connects to local Ollama LLM for multi-ASI narratives
-├── multi_asi_database.py                
+├── multi_asi_database.py              # Handles SQLite operations for multu-ASI scenarios storage
 └── ...
 ```
 ---
