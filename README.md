@@ -43,11 +43,11 @@ Requirements:
 
 Generate a single scenario:
 ```
-python scenario_generator/generate_scenario.py
+python oasis_generator/single_asi_scenario.py
 ```
 Generate a batch:
 ```
-python scenario_generator/generate_batch.py
+python oasis_generator/single_asi_batch.py
 ```
 Output database:
 ```
