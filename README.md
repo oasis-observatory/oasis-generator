@@ -66,8 +66,9 @@ scenario_generator/
 │   └── abbreviator.py
 ├── single_asi_scenario.py            # This script generates a scenario based on a JSON schema, samples parameters, and saves the generated scenario to a database.
 ├── single_asi_batch.py
+├── single_asi_database.py
 ├── multi_asi_scenario.py
-├── asi_database.py
+├── multi_asi_database.py
 └── ...
 ```
 
