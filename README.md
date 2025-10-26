@@ -62,7 +62,7 @@ data/asi_scenarios.db
 
 📁 Project Structure
 
-generator/
+scenario_generator/
 ├── config/
 │   └── asi_scenario_schema.json
 ├── utils/
