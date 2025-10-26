@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/asi_scenario.schema.json",
+  "title": "ASI Scenario",
+  "type": "object",
+  "required": [
+    "id", "title", "metadata", "origin", "architecture", "substrate",
+    "oversight_structure", "core_capabilities", "goals_and_behavior",
+    "impact_and_control", "scenario_content", "quantitative_assessment", "observable_evidence"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "title": { "type": "string" },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional list of keywords for filtering or clustering scenarios"
+    },
+
+    "trajectory_class": {
+      "type": "string",
+      "enum": ["doom", "soft_takeoff", "alignment_success", "alignment_failure", "unknown"],
+      "description": "Optional classification of the scenario outcome"
+    },
+
+    "metadata": {
+      "type": "object",
+      "required": ["created", "last_updated", "version", "source"],
+      "properties": {
+        "created": { "type": "string", "format": "date-time" },
+        "last_updated": { "type": "string", "format": "date-time" },
+        "version": { "type": "integer" },
+        "source": { "type": "string" }
+      }
+    },
+
+    "origin": {
+      "type": "object",
+      "required": ["initial_origin", "development_dynamics"],
+      "properties": {
+        "initial_origin": {
+          "type": "string",
+          "enum": ["state", "corporate", "academic", "open-source", "individual", "military"]
+        },
+        "development_dynamics": {
+          "type": "string",
+          "enum": ["engineered", "emergent", "hybrid"]
+        }
+      }
+    },
+
+    "architecture": {
+      "type": "object",
+      "required": ["type", "deployment_topology"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["monolithic", "swarm", "federated", "modular", "layered"]
+        },
+        "deployment_topology": {
+          "type": "string",
+          "enum": ["centralized", "distributed", "edge", "hybrid"]
+        }
+      }
+    },
+
+    "substrate": {
+      "type": "object",
+      "required": ["type", "deployment_medium", "resilience"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["conventional_compute", "neuromorphic", "quantum", "biological", "hybrid", "unknown"]
+        },
+        "deployment_medium": {
+          "type": "string",
+          "enum": ["cloud", "edge", "embedded", "space-based", "ubiquitous", "virtual"]
+        },
+        "resilience": {
+          "type": "string",
+          "enum": ["fragile", "redundant", "self-repairing"]
+        }
+      }
+    },
+
+    "oversight_structure": {
+      "type": "object",
+      "required": ["type", "effectiveness", "control_surface"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["corporate", "governmental", "multi-stakeholder", "open-source", "none"]
+        },
+        "effectiveness": {
+          "type": "string",
+          "enum": ["strong", "partial", "ineffective", "collapsed"]
+        },
+        "control_surface": {
+          "type": "string",
+          "enum": ["legal", "technical", "market", "social", "unknown"]
+        }
+      }
+    },
+
+    "core_capabilities": {
+      "type": "object",
+      "required": [
+        "agency_level", "agency_level_confidence", "autonomy_degree", "autonomy_degree_confidence",
+        "alignment_score", "alignment_score_confidence", "phenomenology_proxy_score"
+      ],
+      "properties": {
+        "agency_level": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "agency_level_confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "agency_level_confidence_source": { "type": "string" },
+
+        "autonomy_degree": {
+          "type": "string",
+          "enum": ["controlled", "partial", "full"]
+        },
+        "autonomy_degree_confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "autonomy_degree_confidence_source": { "type": "string" },
+
+        "alignment_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "alignment_score_confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "alignment_score_confidence_source": { "type": "string" },
+
+        "phenomenology_proxy_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+      }
+    },
+
+    "goals_and_behavior": {
+      "type": "object",
+      "required": ["stated_goal", "mesa_goals", "opacity", "deceptiveness", "goal_stability"],
+      "properties": {
+        "stated_goal": {
+          "type": "string",
+          "enum": ["human-welfare", "profit", "survival", "exploration", "other"]
+        },
+        "mesa_goals": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "opacity": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "deceptiveness": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "goal_stability": {
+          "type": "string",
+          "enum": ["fixed", "modifiable", "dynamic"]
+        }
+      }
+    },
+
+    "impact_and_control": {
+      "type": "object",
+      "required": ["impact_domains", "oversight_structure", "deployment_strategy"],
+      "properties": {
+        "impact_domains": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "oversight_structure": {
+          "type": "string",
+          "enum": ["corporate", "governmental", "multi-stakeholder", "open-source", "none"]
+        },
+        "deployment_strategy": { "type": "string" }
+      }
+    },
+
+    "scenario_content": {
+      "type": "object",
+      "required": ["title", "narrative", "timeline"],
+      "properties": {
+        "title": { "type": "string" },
+        "narrative": { "type": "string" },
+        "timeline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["phase", "years", "description"],
+            "properties": {
+              "phase": { "type": "string" },
+              "years": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "quantitative_assessment": {
+      "type": "object",
+      "required": ["probability", "risk_assessment"],
+      "properties": {
+        "probability": {
+          "type": "object",
+          "required": ["emergence_probability", "detection_confidence", "projection_confidence", "trend", "last_update_reason"],
+          "properties": {
+            "emergence_probability": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "detection_confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "projection_confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "trend": { "type": "string" },
+            "last_update_reason": { "type": "string" }
+          }
+        },
+        "risk_assessment": {
+          "type": "object",
+          "required": ["existential", "economic", "social", "political"],
+          "properties": {
+            "existential": {
+              "type": "object",
+              "required": ["score", "weight"],
+              "properties": {
+                "score": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10,
+                  "description": "0 = negligible, 10 = catastrophic"
+                },
+                "weight": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            },
+            "economic": {
+              "type": "object",
+              "required": ["score", "weight"],
+              "properties": {
+                "score": { "type": "integer", "minimum": 0, "maximum": 10 },
+                "weight": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            },
+            "social": {
+              "type": "object",
+              "required": ["score", "weight"],
+              "properties": {
+                "score": { "type": "integer", "minimum": 0, "maximum": 10 },
+                "weight": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            },
+            "political": {
+              "type": "object",
+              "required": ["score", "weight"],
+              "properties": {
+                "score": { "type": "integer", "minimum": 0, "maximum": 10 },
+                "weight": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "observable_evidence": {
+      "type": "object",
+      "required": ["key_indicators", "supporting_signals"],
+      "properties": {
+        "key_indicators": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "supporting_signals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["description"],
+            "properties": {
+              "description": { "type": "string" },
+              "source_url": { "type": "string", "format": "uri" },
+              "signal_type": {
+                "type": "string",
+                "enum": ["GitHub", "HuggingFace", "News", "Blog", "Other"]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
