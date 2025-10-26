@@ -25,8 +25,8 @@ This module represents the first step toward the larger OASIS Observatory ecosys
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/oasis-observatory/oasis-scenario-generator.git
-cd oasis-scenario-generator
+git clone https://github.com/oasis-observatory/generator.git
+cd generator
 pip install -r requirements.txt
 
 ```
@@ -57,7 +57,7 @@ data/asi_scenarios.db
 
 ## 📁 Project Structure
 
-scenario_generator/
+generator/
 ├── config/
 │   └── asi_scenario_schema.json       # JSON schema definition for validating scenario structure
 ├── utils/
