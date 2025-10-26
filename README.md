@@ -62,6 +62,7 @@ scenario_generator/
 │   └── asi_scenario_schema.json       # JSON schema definition for validating scenario structure
 ├── utils/
 │   └── abbreviator.py                 # Utility to generate shortened ASI scenario titles
+├── parameter_sampler.py             # Defines how scenario parameters are randomly or manually sampled
 ├── single_asi_scenario.py             # Main script to generate a single ASI scenario
 ├── single_asi_batch.py                # Batch scenario generation utility
 ├── single_asi_ollama_client.py        # Connects to local Ollama LLM for single-ASI scenarios
