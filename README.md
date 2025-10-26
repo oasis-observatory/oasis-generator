@@ -62,13 +62,13 @@ scenario_generator/
 │   └── asi_scenario_schema.json       # JSON schema definition for validating scenario structure
 ├── utils/
 │   └── abbreviator.py                 # Utility to generate shortened ASI scenario titles
-├── single_asi_scenario.py             # Main script to generate a single scenario
+├── single_asi_scenario.py             # Main script to generate a single ASI scenario
 ├── single_asi_batch.py                # Batch scenario generation utility
-├── single_asi_ollama_client.py        # Connects to local Ollama LLM for single-agent narratives
-├── single_asi_database.py             # Handles SQLite operations for sinle-ASI scenarios storage
-├── multi_asi_scenario.py              # Generator logic for multi-agent (multi-ASI) scenario narratives
-├── multi_asi_ollama_client.py         # Connects to local Ollama LLM for multi-ASI narratives
-├── multi_asi_database.py              # Handles SQLite operations for multu-ASI scenarios storage
+├── single_asi_ollama_client.py        # Connects to local Ollama LLM for single-ASI scenarios
+├── single_asi_database.py             # Handles SQLite operations for sinle-ASI scenarios storage at asi_scenarios.db
+├── multi_asi_scenario.py              # Generator logic for multi-agent (multi-ASI) scenario narratives based on the single-ASI scenarios from asi_scenarios.db
+├── multi_asi_ollama_client.py         # Connects to local Ollama LLM for multi-ASI scenarios
+├── multi_asi_database.py              # Handles SQLite operations for multu-ASI scenarios storage at multi_asi_scenarios.db
 └── ...
 ```
 ---
