@@ -1,0 +1,25 @@
+# Core functionality
+requests>=2.31.0
+pandas>=2.2.0
+numpy>=1.26.0
+
+# LLM interaction and JSON parsing
+openai>=1.2.3             # optional: if using OpenAI API
+jsonschema>=4.19.0
+json5>=0.9.12
+commentjson>=0.9.0        # optional, for .jsonc parsing
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# HTML parsing
+beautifulsoup4>=4.12.0
+lxml>=4.9.3
+
+# GitHub/HuggingFace APIs (optional)
+PyGithub>=1.59.0
+huggingface_hub>=0.20.0
+
+# Local LLM tools (optional)
+# ollama
