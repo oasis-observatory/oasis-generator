@@ -16,7 +16,6 @@ This module represents the first step toward the larger OASIS Observatory ecosys
 ## ✨ Features
 
 - Generate **single-ASI** or **multi-ASI** scenario narratives
-- Validate results using **JSON Schema**
 - Plug in your preferred LLM backend (Ollama, OpenRouter, Claude, etc.)
 - Store and query scenarios using **SQLite3**
 - Extensible: connect to precursor data or visualization tools
@@ -76,7 +75,7 @@ scenario_generator/
 ## 🧭 Roadmap
 
 - Add multiple LLM agent evaluators
-- Strengthen schema validation
+- Validate results using **JSON Schema**
 - Connect scenarios with precursor signals
 - Add narrative quality metrics (Coherence, Novelty, Diversity)
 
