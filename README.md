@@ -1,6 +1,6 @@
 # oasis-generator
 
-OASIS Generator v0.1
+OASIS Generator v0.1 - Open ASI Scenario Generator
 
 Experimental generator producing single- and multi-ASI foresight scenarios using open hermeneutic models.
 
