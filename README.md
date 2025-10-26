@@ -1,7 +1,7 @@
 # Open Artificial Superintelligence Scenario Generator v0.1 / OASIS Generator v0.1
 Experimental generator producing single-ASI and multi-ASI foresight scenarios using open hermeneutic models.
 
-The **OASIS Generator Alpha** is an open-source module for creating narrative simulations of Artificial Superintelligence (ASI) emergence and interaction.
+The **OASIS Generator** is an open-source module for creating narrative simulations of Artificial Superintelligence (ASI) emergence and interaction.
 It generates structured scenarios, validates them via schema, and stores them in a local SQLite database for later mapping or analysis. 
 It is an experimental tool for producing foresight-style reports on potential futures of Artificial Superintelligence.
 It can generate both **single-agent (ASI)** and **multi-agent (poly-ASI)** scenarios, each accompanied by interpretive narratives and thematic indicators.
