@@ -11,7 +11,6 @@ This module represents the first step toward the larger OASIS Observatory ecosys
 **Status:** Alpha — open for testing and conceptual feedback.
 
 ✳️ Focus: narrative coherence, scenario diversity, and epistemic transparency.
-
 ---
 
 ## ✨ Features
@@ -21,7 +20,6 @@ This module represents the first step toward the larger OASIS Observatory ecosys
 - Plug in your preferred LLM backend (Ollama, OpenRouter, Claude, etc.)
 - Store and query scenarios using **SQLite3**
 - Extensible: connect to precursor data or visualization tools
-
 ---
 
 ## 📦 Installation
@@ -57,7 +55,7 @@ data/asi_scenarios.db
 ```
 ```
 
-📁 Project Structure
+## 📁 Project Structure
 
 scenario_generator/
 ├── config/
@@ -71,7 +69,6 @@ scenario_generator/
 ├── multi_asi_database.py
 └── ...
 ```
-
 ---
 
 ## 🧭 Roadmap
@@ -81,7 +78,7 @@ scenario_generator/
 - Connect scenarios with precursor signals
 - Add narrative quality metrics (Coherence, Novelty, Diversity)
 
-# 🪪 License
+## 🪪 License
 
 Licensed under the MIT License.
 © 2025 OASIS Observatory. Open for research and educational use.
