@@ -1,4 +1,5 @@
-# Open Artificial Superintelligence Scenario Generator v0.1 / OASIS Generator v0.1
+# Open Artificial Superintelligence Scenario Generator v0.1
+# OASIS Generator v0.1
 
 Experimental generator producing single-ASI and multi-ASI foresight scenarios using local LLM models.
 
