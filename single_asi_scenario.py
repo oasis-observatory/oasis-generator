@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 """
-single_asi_scenario.py v2
+single_asi_scenario.py v3
 
 Generates ONE ASI scenario with:
 - 100% schema compliance
-- Dynamic multi-phase timeline (FIXED: returns list, not None)
-- Narrative consistency enforced
-- Zero validation failures
+- Dynamic timeline (hyphen-only)
+- Multi-model Ollama client with fallbacks
+- Timeline injected into prompt (NO DRIFT)
+- Full consistency checking
+- Structured return (model_used, error)
 """
 
 from __future__ import annotations
 
 import random
 import uuid
+import logging
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -22,14 +25,23 @@ import jsonschema
 from common.schema_loader import load_schema
 from parameter_sampler import sample_parameters
 from scenario_generator.utils.abbreviator import generate_title_abbreviation
-from single_asi_ollama_client import generate_narrative
+from single_asi_ollama_client import generate_narrative, ModelStrategy
 from single_asi_database import init_db, save_scenario
 
+# === LOGGING ===
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)-8s | %(message)s",
+    datefmt="%H:%M:%S"
+)
+logger = logging.getLogger(__name__)
+
+# === SCHEMA ===
 SCHEMA = load_schema("asi_scenario_schema.json")
 
 
 # --------------------------------------------------------------------------- #
-# FULLY IMPLEMENTED DYNAMIC TIMELINE (returns List[dict])
+# DYNAMIC TIMELINE (returns List[dict])
 # --------------------------------------------------------------------------- #
 def _dynamic_timeline() -> List[Dict[str, Any]]:
     current_year = datetime.now().year
@@ -127,7 +139,7 @@ def _dynamic_timeline() -> List[Dict[str, Any]]:
             })
     timeline.append(pivot)
     timeline.extend(future)
-    return timeline  # ← Always returns List[dict], never None
+    return timeline
 
 
 # --------------------------------------------------------------------------- #
@@ -147,21 +159,21 @@ class NarrativeConsistencyChecker:
     def check_origin(self) -> Tuple[bool, str]:
         origin = self.p["initial_origin"]
         if origin == "open-source":
-            if not self._contains(["open", "community", "collaborat", "transpar", "public"]):
+            if not self._contains(["open", "community", "collaborat", "transpar", "public", "github"]):
                 return False, "Open-source must mention transparency/community"
         return True, ""
 
     def check_oversight(self) -> Tuple[bool, str]:
         otype = self.p["oversight_type"]
         if otype == "none":
-            if self._contains(["oversight", "govern", "audit", "control", "regulat"]):
+            if self._contains(["oversight", "govern", "audit", "control", "regulat", "monitor"]):
                 return False, "No oversight → no mention of control"
         return True, ""
 
     def check_agency(self) -> Tuple[bool, str]:
         level = self.p["agency_level"]
         if level < 0.3:
-            if self._contains(["strategic", "self-improving", "autonomous", "agent"]):
+            if self._contains(["strategic", "self-improving", "autonomous", "agent", "plan"]):
                 return False, "Low agency → no high-agency language"
         return True, ""
 
@@ -187,17 +199,27 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
         scenario_id = str(uuid.uuid4())
         timestamp = datetime.now(timezone.utc).isoformat()
 
-        try:
-            narrative = generate_narrative(title, raw)
-        except Exception as exc:
-            print(f"[ERROR] LLM failed (attempt {attempt}): {exc}")
+        # Generate timeline first
+        timeline_phases = _dynamic_timeline()
+        raw["timeline_phases"] = timeline_phases
+
+        # Generate narrative with multi-model support
+        success, narrative, model_used, error = generate_narrative(
+            title=title,
+            parameters=raw,
+            timeline_phases=timeline_phases,
+            strategy=ModelStrategy.PRIORITY,
+            preferred_model="llama3.1:8b"
+        )
+
+        if not success:
+            logger.error(f"Narrative failed (attempt {attempt}): {error}")
             if attempt == max_retries:
+                logger.critical("Max retries exceeded. Scenario failed.")
                 return None
             continue
 
-        # Attach timeline
-        timeline_phases = _dynamic_timeline()  # ← Now returns real list
-        raw["timeline_phases"] = timeline_phases
+        logger.info(f"Narrative generated with model: {model_used}")
 
         # Consistency check
         checker = NarrativeConsistencyChecker(raw)
@@ -205,9 +227,9 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
         consistent, failures = checker.run_all()
 
         if not consistent:
-            print(f"[RETRY] Inconsistent narrative (attempt {attempt}): {failures}")
+            logger.warning(f"Inconsistent narrative (attempt {attempt}): {failures}")
             if attempt == max_retries:
-                print("[FINAL FAILURE] Max retries exceeded.")
+                logger.critical("Consistency failed after max retries.")
                 return None
             continue
 
@@ -220,6 +242,7 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
                 "last_updated": timestamp,
                 "version": 1,
                 "source": "generated",
+                "model_used": model_used  # ← NEW: track which model
             },
             "origin": {
                 "initial_origin": raw["initial_origin"],
@@ -262,7 +285,7 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
             "scenario_content": {
                 "title": title,
                 "narrative": narrative,
-                "timeline": {"phases": timeline_phases},  # ← Always a list
+                "timeline": {"phases": timeline_phases},
             },
             "quantitative_assessment": {
                 "probability": {
@@ -288,16 +311,17 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
         # Schema validation
         try:
             jsonschema.validate(instance=scenario, schema=SCHEMA)
+            logger.debug("Schema validation passed.")
         except jsonschema.ValidationError as exc:
-            print(f"[FATAL] Schema failed: {exc.message}")
+            logger.critical(f"Schema validation failed: {exc.message}")
             return None
 
         # Save
         try:
             save_scenario(scenario)
-            print(f"Scenario '{title}' saved. (Attempt {attempt})")
+            logger.info(f"Scenario '{title}' saved. (Attempt {attempt}, Model: {model_used})")
         except Exception as exc:
-            print(f"[ERROR] DB save failed: {exc}")
+            logger.error(f"DB save failed: {exc}")
             return None
 
         return scenario
@@ -305,5 +329,8 @@ def generate_scenario(max_retries: int = 3) -> Optional[Dict[str, Any]]:
     return None
 
 
+# --------------------------------------------------------------------------- #
+# CLI
+# --------------------------------------------------------------------------- #
 if __name__ == "__main__":
     generate_scenario()
