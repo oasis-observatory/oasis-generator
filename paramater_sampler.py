@@ -5,6 +5,7 @@
 import random
 from typing import Dict, Any
 
+
 def sample_parameters() -> Dict[str, Any]:
     """
     Sample a complete set of ASI scenario parameters.
