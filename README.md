@@ -76,10 +76,10 @@ generator/
 
 ## 🧭 Roadmap
 
-- Add multiple LLM agent evaluators
-- Validate results using **JSON Schema**
-- Connect scenarios with precursor signals
-- Add narrative quality metrics (Coherence, Novelty, Diversity)
+- [x] Validate results using **JSON Schema**
+- [ ] Add multiple LLM agent evaluators
+- [ ] Connect scenarios with precursor signals
+- [ ] Add narrative quality metrics (Coherence, Novelty, Diversity)
 
 ## 🪪 License
 
