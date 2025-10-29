@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OASIS Observatory Multi-ASI Scenario",
+  "type": "object",
+  "required": ["id", "title", "metadata", "source_single_ids", "participants", "scenario_content"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-f0-9-]{36}$" },
+    "title": { "type": "string", "minLength": 1 },
+    "metadata": {
+      "type": "object",
+      "required": ["created", "version", "source"],
+      "properties": {
+        "created": { "type": "string", "format": "date-time" },
+        "last_updated": { "type": "string", "format": "date-time" },
+        "version": { "type": "integer", "minimum": 1 },
+        "source": { "type": "string" },
+        "model_used": { "type": "string" }
+      }
+    },
+    "source_single_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 2
+    },
+    "participants": {
+      "type": "array",
+      "items": { "$ref": "asi_scenario_schema.json#/properties/core_capabilities" },
+      "minItems": 2
+    },
+    "scenario_content": {
+      "type": "object",
+      "required": ["title", "narrative", "timeline", "interaction_dynamics"],
+      "properties": {
+        "title": { "type": "string" },
+        "narrative": { "type": "string", "minLength": 200 },
+        "timeline": {
+          "type": "object",
+          "required": ["phases"],
+          "properties": {
+            "phases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["phase", "years"],
+                "properties": {
+                  "phase": { "type": "string" },
+                  "years": { "type": "string", "pattern": "^(\\d{4}(-\\d{4})?|\\d{4}\\+)$" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "interaction_dynamics": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "type": "string", "enum": ["cooperation", "conflict", "merge", "emergent"] },
+            "triggers": { "type": "array", "items": { "type": "string" } },
+            "escalation_path": { "type": "string" }
+          }
+        },
+        "outcome_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "existential_risk": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}
